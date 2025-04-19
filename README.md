@@ -1,3 +1,13 @@
+## Understand code instruction
+
+GET /tasks
+Request -> route -> Controller -> Query -> CommandBus -> QueryHandler -> SpecificationBuilder -> Repository -> Aggregate -> Controller -> DTO -> Response
+
+PUT
+Request -> route -> Controller -> Command -> CommandBus -> CommandHandler -> Repository -> Aggregate -> Controller -> Response
+
+---
+
 ## 🧩 Questions
 
 ### Add Comments to Task
