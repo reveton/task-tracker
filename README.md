@@ -1,51 +1,29 @@
 ## Understand code instruction
 
-GET /tasks
-Request
-   ↓
-Route
-   ↓
-Controller
-   ↓
-Query (GetTasksQuery)
-   ↓
-CommandBus
-   ↓
-QueryHandler (GetTasksQueryHandler)
-   ↓
-SpecificationBuilder
-   ↓
-Repository
-   ↓
-Aggregate (Task[])
-   ↓
-Controller
-   ↓
-DTO (TaskDTO[])
-   ↓
-Response
+Filters tasks by status and/or assignee.
+	1.	GET /tasks — HTTP request hits the route.
+	2.	Route (defined in routes/api.php) forwards it to TaskController@index.
+	3.	Request (GetTasksRequest) validates input and converts it to a GetTasksQuery.
+	4.	Controller sends the query to CommandBus::dispatch(...).
+	5.	QueryHandler:
+	•	Builds a filter via SpecificationBuilder.
+	•	Calls TaskRepository::findBySpec(...).
+	6.	Repository returns matching Task aggregates.
+	7.	Controller maps the results to TaskDTO and converts them to arrays.
+	8.	Response is returned via ResponseHelper::success(...).
 
-PUT
 
-Request
-   ↓
-Route
-   ↓
-Controller
-   ↓
-Command (AssignTaskToUserCommand / UpdateTaskStatusCommand)
-   ↓
-CommandBus
-   ↓
-CommandHandler
-   ↓
-Repository
-   ↓
-Aggregate (Task)
-   ↓
-Controller
-   ↓
-Response
+Updates the assignee or task status.
+	1.	PUT request hits the appropriate route.
+	2.	Route maps it to TaskController@assignToUser or @updateStatus.
+	3.	Request (AssignTaskToUserRequest, UpdateTaskStatusRequest) validates the payload.
+	4.	The request converts the data to the corresponding Command.
+	5.	CommandBus::dispatch(…) forwards the command to its Handler.
+	6.	CommandHandler:
+	•	Loads the Task from the repository.
+	•	Executes logic like assignUser(...) or updateStatus(...) on the aggregate.
+	•	Saves the modified Task back to the repository.
+	7.	Returns a success response via ResponseHelper::success().
 
 ---
 
