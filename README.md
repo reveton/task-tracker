@@ -1,10 +1,51 @@
 ## Understand code instruction
 
 GET /tasks
-Request -> route -> Controller -> Query -> CommandBus -> QueryHandler -> SpecificationBuilder -> Repository -> Aggregate -> Controller -> DTO -> Response
+Request
+   ↓
+Route
+   ↓
+Controller
+   ↓
+Query (GetTasksQuery)
+   ↓
+CommandBus
+   ↓
+QueryHandler (GetTasksQueryHandler)
+   ↓
+SpecificationBuilder
+   ↓
+Repository
+   ↓
+Aggregate (Task[])
+   ↓
+Controller
+   ↓
+DTO (TaskDTO[])
+   ↓
+Response
 
 PUT
-Request -> route -> Controller -> Command -> CommandBus -> CommandHandler -> Repository -> Aggregate -> Controller -> Response
+
+Request
+   ↓
+Route
+   ↓
+Controller
+   ↓
+Command (AssignTaskToUserCommand / UpdateTaskStatusCommand)
+   ↓
+CommandBus
+   ↓
+CommandHandler
+   ↓
+Repository
+   ↓
+Aggregate (Task)
+   ↓
+Controller
+   ↓
+Response
 
 ---
 
